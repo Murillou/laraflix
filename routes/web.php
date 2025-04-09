@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('login.index');
-});
+Route::resource('/', \App\Http\Controllers\LoginController::class);
+
+Route::resource('register', \App\Http\Controllers\RegisterController::class)->only('create', 'store');
