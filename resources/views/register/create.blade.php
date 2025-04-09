@@ -1,9 +1,10 @@
 <x-layout title="Registrar">
     <form method="POST" action="{{ route('register.store') }}">
+        @csrf
         <div class="card p-4 shadow" style="width: 100%; max-width: 400px">
             <div class="form-group">
-                <label for="" class="label-control" style="cursor: pointer">Nome do usuário: </label>
-                <input type="text" name="" id="" class="form-control">
+                <label for="name" class="label-control" style="cursor: pointer">Nome do usuário: </label>
+                <input type="text" name="name" id="name" class="form-control">
             </div>
 
             <div class="form-group mt-3">
@@ -12,7 +13,7 @@
             </div>
 
             <div class="form-group mt-3">
-                <label for="password" class="label-control" style="cursor: pointer">Nome do usuário: </label>
+                <label for="password" class="label-control" style="cursor: pointer">Senha: </label>
                 <input type="password" name="password" id="password" class="form-control">
             </div>
 
