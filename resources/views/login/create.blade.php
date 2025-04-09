@@ -1,7 +1,7 @@
 <x-layout title="Login">
     <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
         <h1 class="card-title text-center">Laraflix</h1>
-        <form method="post" action="">
+        <form method="POST" action="{{ route('login.store') }}">
             @csrf
             <div class="form-group">
                 <label class="form-label" style="cursor: pointer" for="email">E-mail:</label>
@@ -15,7 +15,7 @@
 
             <div class="d-flex justify-content-between mt-4">
                 <button type="submit" class="btn btn-primary">Login</button>
-                <a href="" class="btn btn-secondary">Registrar</a>
+                <a href="{{ route('register.create') }}" class="btn btn-secondary">Registrar</a>
             </div>
         </form>
     </div>
