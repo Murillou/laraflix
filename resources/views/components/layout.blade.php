@@ -9,7 +9,11 @@
 <body>
     <nav class="container-fluid d-flex justify-content-between navbar-text text">
         <a>Home</a>
-        <a href="{{ route('login.logout') }}">Logout</a>
+        <form method="POST" action="{{ route('login.logout') }}">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Logout</button>
+        </form>
     </nav>
 
     <main class="container d-flex justify-content-center align-items-center vh-100 ">
