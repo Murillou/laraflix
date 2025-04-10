@@ -13,10 +13,13 @@
                 <input type="password" class="form-control" name="password" id="password" />
             </div>
 
+            <x-error></x-error>
+
             <div class="d-flex justify-content-between mt-4">
                 <button type="submit" class="btn btn-primary">Login</button>
                 <a href="{{ route('register.create') }}" class="btn btn-secondary">Registrar</a>
             </div>
+
         </form>
     </div>
 </x-layout>
