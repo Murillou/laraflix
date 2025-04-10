@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function select()
     {
         $profiles = Profile::where('user_id', Auth::id())->get();
