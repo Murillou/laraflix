@@ -17,14 +17,18 @@ class RegisterController extends Controller
 
     public function store(Request $request, ProfileRepository $repository)
     {
-        $user = User::create($request->except('_token'));
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'min:4'],
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+
+        $user = User::create($data);
 
         auth()->login($user);
 
-        if (auth()->check()) {
-            return redirect()->route('profiles.select');
-        } else {
-            return redirect()->back();
-        }
+        return redirect()->route('profiles.select');
     }
 }
