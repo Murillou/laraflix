@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterValidateRequest;
 use App\Models\User;
 use App\Repositories\ProfileRepository;
 use Illuminate\Http\Request;
@@ -15,13 +16,9 @@ class RegisterController extends Controller
         return view('register.create');
     }
 
-    public function store(Request $request, ProfileRepository $repository)
+    public function store(RegisterValidateRequest $request, ProfileRepository $repository)
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255', 'min:4'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
-        ]);
+        $data = $request->validated();
 
         $data['password'] = Hash::make($data['password']);
 
