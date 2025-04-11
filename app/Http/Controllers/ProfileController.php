@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function __construct()
+    public function __construct(ProfileRepository $repository)
     {
         $this->middleware('auth');
+        $this->repository = $repository;
     }
     public function select()
     {
@@ -26,60 +27,53 @@ class ProfileController extends Controller
         return view('profiles.create');
     }
 
-    public function store(ProfileValidateRequest $request, ProfileRepository $repository)
+    public function store(ProfileValidateRequest $request)
     {
-        $user = Auth::user();
-
-        if ($user->profiles()->count() >= 5) {
-            return redirect()->route('profiles.select')->with('error', 'Você só pode ter no máximo 5 perfis.');
-        }
-
         $data = $request->validated();
-
-        if ($request->hasFile('image_url')) {
-            $data['image_url'] = $request->file('image_url')->store('images', 'public');
-        }
+        $this->handleImageUpload($request, $data);
 
         $data['user_id'] = Auth::id();
 
-        Profile::create($data);
+        $this->repository->create($data);
 
         return redirect()->route('profiles.select')->with('success', 'Perfil criado com sucesso!');
     }
-
     public function edit(Profile $profile)
     {
-        if ($profile->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->authorizeProfile($profile);
 
         return view('profiles.edit', compact('profile'));
     }
     public function update(ProfileValidateRequest $request, Profile $profile)
     {
-        if ($profile->user_id !== Auth::id()) {
-            abort(403);
-        }
-
+        $this->authorizeProfile($profile);
         $data = $request->validated();
+        $this->handleImageUpload($request, $data);
 
-        if ($request->hasFile('image_url')) {
-            $data['image_url'] = $request->file('image_url')->store('images', 'public');
-        }
-
-        $profile->update($data);
+        $this->repository->update($data, $profile);
 
         return redirect()->route('profiles.select')->with('success', 'Perfil atualizado com sucesso!');
     }
 
     public function destroy(Profile $profile)
     {
+        $this->authorizeProfile($profile);
+        $this->repository->delete($profile);
+
+        return redirect()->route('profiles.select')->with('success', 'Perfil deletado com sucesso!');
+    }
+
+    private function handleImageUpload(ProfileValidateRequest $request, array &$data): void
+    {
+        if ($request->hasFile('image_url')) {
+            $data['image_url'] = $request->file('image_url')->store('images', 'public');
+        }
+    }
+
+    private function authorizeProfile(Profile $profile)
+    {
         if ($profile->user_id !== Auth::id()) {
             abort(403);
         }
-
-        $profile->delete();
-
-        return redirect()->route('profiles.select')->with('success', 'Perfil deletado com sucesso!');
     }
 }
