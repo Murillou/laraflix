@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileValidateRequest;
 use App\Models\Profile;
 use App\Repositories\ProfileRepository;
 use Illuminate\Http\Request;
@@ -25,12 +26,15 @@ class ProfileController extends Controller
         return view('profiles.create');
     }
 
-    public function store(Request $request, ProfileRepository $repository)
+    public function store(ProfileValidateRequest $request, ProfileRepository $repository)
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:15'],
-            'image_url' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-        ]);
+        $user = Auth::user();
+
+        if ($user->profiles()->count() >= 5) {
+            return redirect()->route('profiles.select')->with('error', 'Você só pode ter no máximo 5 perfis.');
+        }
+
+        $data = $request->validated();
 
         if ($request->hasFile('image_url')) {
             $data['image_url'] = $request->file('image_url')->store('images', 'public');
@@ -41,5 +45,41 @@ class ProfileController extends Controller
         Profile::create($data);
 
         return redirect()->route('profiles.select')->with('success', 'Perfil criado com sucesso!');
+    }
+
+    public function edit(Profile $profile)
+    {
+        if ($profile->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('profiles.edit', compact('profile'));
+    }
+    public function update(ProfileValidateRequest $request, Profile $profile)
+    {
+        if ($profile->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $data = $request->validated();
+
+        if ($request->hasFile('image_url')) {
+            $data['image_url'] = $request->file('image_url')->store('images', 'public');
+        }
+
+        $profile->update($data);
+
+        return redirect()->route('profiles.select')->with('success', 'Perfil atualizado com sucesso!');
+    }
+
+    public function destroy(Profile $profile)
+    {
+        if ($profile->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $profile->delete();
+
+        return redirect()->route('profiles.select')->with('success', 'Perfil deletado com sucesso!');
     }
 }
