@@ -16,7 +16,19 @@
         </form>
     </nav>
 
-    <main class="container d-flex justify-content-center align-items-center vh-100 ">
+    <main class="container flex-column d-flex justify-content-center align-items-center vh-100 ">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         {{$slot}}
     </main>
 </body>
