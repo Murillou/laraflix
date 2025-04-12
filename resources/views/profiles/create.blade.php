@@ -4,7 +4,12 @@
         <div class="card p-4 shadow" style="width: 100%; max-width: 600px ">
             <div class="form-group d-flex flex-column">
                 <label for="name" class="form-label">Nome do perfil:</label>
-                <input type="text" id="name" name="name" />
+                <input type="text" id="name" name="name"  class="form-control @error('name') is-invalid @enderror"/>
+                @error('name')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             <div class="form-group d-flex flex-column mt-3">
