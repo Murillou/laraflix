@@ -6,10 +6,10 @@
     <title>{{ $title }} - Laraflix</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     @auth
         <nav class="container-fluid d-flex justify-content-between navbar-text text">
-            <a>Home</a>
+            <a href="{{ route('profiles.select') }}">Laraflix</a>
             <form method="POST" action="{{ route('login.logout') }}">
                 @csrf
                 @method('DELETE')
@@ -18,7 +18,7 @@
         </nav>
     @endauth
 
-    <main class="container flex-column d-flex justify-content-center align-items-center vh-100 ">
+    <main class="container flex-column d-flex justify-content-center align-items-center flex-grow-1 pt-4 ">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
