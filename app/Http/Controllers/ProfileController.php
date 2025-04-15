@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileValidateRequest;
 use App\Models\Profile;
 use App\Repositories\ProfileRepository;
+use App\Services\TmdbService;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -36,6 +37,13 @@ class ProfileController extends Controller
         $this->repository->create($data);
 
         return redirect()->route('profiles.select')->with('success', 'Perfil criado com sucesso!');
+    }
+
+    public function show(Profile $profile, TmdbService $tmdbService)
+    {
+        $movies = $tmdbService->getMovies();
+
+        return view('profiles.movies', compact('profile', 'movies'));
     }
     public function edit(Profile $profile)
     {
