@@ -3,11 +3,11 @@
         <div class="d-flex gap-2 flex-wrap justify-content-center">
             @foreach($profiles as $profile)
                 <div>
-                    <div class="d-flex flex-column justify-content-center align-items-center">
+                    <a href="{{ route('movies.index', $profile->id) }}" class="d-flex flex-column justify-content-center align-items-center">
                         <img src="{{ $profile->image_url ? asset('storage/' . $profile->image_url) : asset('images/default-profile.jpeg') }}"
                         style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;"/>
                         <span>{{ $profile->name  }}</span>
-                    </div>
+                    </a>
 
                     <div class="d-flex gap-2 mt-2 justify-content-center">
                         <form method="POST" action="{{ route('profiles.destroy', $profile->id) }}">
