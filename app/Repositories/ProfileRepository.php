@@ -19,7 +19,7 @@ class ProfileRepository implements ProfileRepositoryInterface
         $count = Profile::where('user_id', $userId)->count();
 
         if ($count >= 5) {
-            abort(403, 'Você só pode ter no máximo 5 perfis.');
+            return redirect()->back()->with('error', 'Não é possível criar mais de 5 perfis.');
         }
 
         return Profile::create($data);
