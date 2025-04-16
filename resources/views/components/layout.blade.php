@@ -8,14 +8,20 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     @auth
-        <nav class="container-fluid d-flex justify-content-between navbar-text text">
-            <a href="{{ route('profiles.select') }}">Laraflix</a>
-            <form method="POST" action="{{ route('login.logout') }}">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Logout</button>
-            </form>
-        </nav>
+        @if(Route::is('profiles.select'))
+            <nav class="container-fluid d-flex justify-content-between navbar-text text">
+                <a href="{{ route('profiles.select') }}">Laraflix</a>
+                <form method="POST" action="{{ route('login.logout') }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Logout</button>
+                </form>
+            </nav>
+        @else
+            <nav class="container-fluid d-flex justify-content-between navbar-text text">
+                <a href="{{ route('profiles.select') }}">Laraflix</a>
+            </nav>
+        @endif
     @endauth
 
     <main class="container flex-column d-flex justify-content-center align-items-center flex-grow-1 pt-4 ">
