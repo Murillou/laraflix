@@ -4,8 +4,9 @@
             @foreach($profiles as $profile)
                 <div>
                     <a href="{{ route('movies.index', $profile->id) }}" class="d-flex flex-column justify-content-center align-items-center">
-                        <img src="{{ $profile->image_url ? asset('storage/' . $profile->image_url) : asset('images/default-profile.jpeg') }}"
-                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;"/>
+                        <img class="profile-image"
+                             alt=""
+                             src="{{ $profile->image_url ? asset('storage/' . $profile->image_url) : asset('images/default-profile.jpeg') }}"/>
                         <span>{{ $profile->name  }}</span>
                     </a>
 
@@ -26,8 +27,7 @@
             @endforeach
         </div>
 
-        <a href="{{ route('profiles.create') }}" type="button" class="btn btn-primary d-flex justify-content-center align-items-center gap-2 mt-3 mx-auto"
-           style="width: 100%; max-width: 300px">
+        <a href="{{ route('profiles.create') }}" type="button" class="btn btn-primary d-flex justify-content-center align-items-center gap-2 mt-3 mx-auto new-profile-button">
            <span>+</span>
            <span>Novo perfil</span>
        </a>

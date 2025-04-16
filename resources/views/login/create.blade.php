@@ -1,11 +1,11 @@
 <x-layout title="Login">
-    <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+    <div class="card p-4 shadow form-auth-card">
         <h1 class="card-title text-center">Laraflix</h1>
         <form method="POST" action="{{ route('login.store') }}">
             @csrf
             <div class="form-group">
-                <label class="form-label" style="cursor: pointer" for="email">E-mail:</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror "  name="email" id="email" value="{{old('email')}}"
+                <label class="form-label label-input" for="email">E-mail:</label>
+                <input type="email" class="form-control @error('email') is-invalid @enderror " name="email" id="email" value="{{old('email')}}"
                        required autocomplete="email" />
                 @error('email')
                     <div class="invalid-feedback"> {{ $message }}</div>
@@ -13,7 +13,7 @@
             </div>
 
             <div class="form-group mt-3">
-                <label class="form-label" style="cursor: pointer" for="password">Senha:</label>
+                <label class="form-label label-input" for="password">Senha:</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password"
                        required autocomplete="current-password" />
                 @error('password')

@@ -1,0 +1,26 @@
+.movie-card-img{
+    height: 400px;
+    object-fit: cover;
+}
+
+.movie-card-body{
+    height: 200px;
+}
+
+.movie-card-title{
+    font-size: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.movie-card-text{
+    font-size: 0.9rem;
+}
+
+.movie-card-overview{
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

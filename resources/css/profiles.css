@@ -1,0 +1,12 @@
+.profile-image {
+    width: 6.25rem;
+    height: 6.25rem;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.new-profile-button {
+    width: 100%;
+    max-width: 18.75rem;
+}
+
