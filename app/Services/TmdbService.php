@@ -21,16 +21,18 @@ class TmdbService
 
     }
 
-    public function getMovies()
+    public function getMovies($page = 1)
     {
         $response = Http::get("{$this->baseUrl}movie/popular", [
             'api_key' => $this->apiKey,
             'language' => 'pt-BR',
-            'page' => 1,
+            'page' => $page,
         ]);
 
         if ($response->successful()) {
-            return $response->json()['results'];
+            return $response->json();
         }
+
+        return null;
     }
 }
