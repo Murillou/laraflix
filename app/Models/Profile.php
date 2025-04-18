@@ -12,4 +12,14 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function watchList()
+    {
+        return $this->hasMany(WatchList::class);
+    }
 }
