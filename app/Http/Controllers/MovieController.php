@@ -46,4 +46,11 @@ class MovieController extends Controller
             'profile' => $profile,
         ]);
     }
+
+    public function show($profileId, $movieId)
+    {
+        $movie = $this->tmdbService->getMovieDetails($movieId);
+
+        return view('movies.show', compact('movie'));
+    }
 }
