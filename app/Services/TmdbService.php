@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 
 class TmdbService
@@ -16,9 +17,24 @@ class TmdbService
         $this->baseUrl = env('TMDB_BASE_URL');
     }
 
-    public function searchMovies($query)
+    public function getMovieDetails($movieId)
     {
+        try{
+            $response = Http::get("{$this->baseUrl}movie/{$movieId}",
+                [
+                    'api_key' => $this->apiKey,
+                    'language' => 'en-US'
+                ]);
 
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            return null;
+        } catch (RequestException $error) {
+            return null;
+        }
     }
 
     public function getMovies($page = 1)
