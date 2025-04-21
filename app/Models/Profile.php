@@ -15,10 +15,10 @@ class Profile extends Model
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Movie::class, 'favorites');
     }
 
-    public function watchList()
+    public function watchlists()
     {
         return $this->hasMany(WatchList::class);
     }
