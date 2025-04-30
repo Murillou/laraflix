@@ -1,4 +1,12 @@
+<nav class="container-fluid d-flex justify-content-between navbar-text text">
+    <a href="{{ route('profiles.select') }}" class="btn font-monospace text-warning">Perfis</a>
+    <div>
+        <a href="{{ route('movies.favorites', ['profile' => $profile->id]) }}">Favoritos</a>
+    </div>
+</nav>
+
 <x-layout title="Filmes">
+
     @if(count($movies) > 0)
         <div class="row">
             @foreach($movies as $movie)

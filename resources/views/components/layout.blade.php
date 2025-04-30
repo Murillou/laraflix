@@ -24,10 +24,6 @@
                     <a href="{{ url()->previous() }}" class="btn">Ver filmes</a>
                 </div>
             </nav>
-        @else
-            <nav class="container-fluid d-flex justify-content-between navbar-text text">
-                <a href="{{ route('profiles.select') }}" class="btn font-monospace text-warning">Perfis</a>
-            </nav>
         @endif
     @endauth
 
