@@ -10,16 +10,23 @@
     @auth
         @if(Route::is('profiles.select'))
             <nav class="container-fluid d-flex justify-content-between navbar-text text">
-                <a href="{{ route('profiles.select') }}">Laraflix</a>
+                <a href="{{ route('profiles.select') }}" class="btn font-monospace text-warning">Perfis</a>
                 <form method="POST" action="{{ route('login.logout') }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Logout</button>
+                    <button type="submit" class="btn link-danger">Sair</button>
                 </form>
+            </nav>
+        @elseif(Route::is('movies.show'))
+            <nav class="container-fluid d-flex justify-content-between navbar-text text">
+                <a href="{{ route('profiles.select') }}" class="btn font-monospace text-warning">Perfis</a>
+                <div>
+                    <a href="{{ url()->previous() }}" class="btn">Ver filmes</a>
+                </div>
             </nav>
         @else
             <nav class="container-fluid d-flex justify-content-between navbar-text text">
-                <a href="{{ route('profiles.select') }}">Laraflix</a>
+                <a href="{{ route('profiles.select') }}" class="btn font-monospace text-warning">Perfis</a>
             </nav>
         @endif
     @endauth
