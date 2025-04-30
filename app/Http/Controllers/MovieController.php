@@ -49,8 +49,32 @@ class MovieController extends Controller
 
     public function show($profileId, $movieId)
     {
+        $profile = Profile::findOrFail($profileId);
         $movie = $this->tmdbService->getMovieDetails($movieId);
 
-        return view('movies.show', compact('movie'));
+        return view('movies.show', compact('profile', 'movie'));
+    }
+
+    public function addToFavorites(Request $request, $profileId, $movieId)
+    {
+        $profile = Profile::findOrFail($profileId);
+
+        $exists = $profile->movies->wherePivot('movie_id', $movieId)->wherePivot('status', 'favorite')->exists();
+
+        if (!$exists) {
+            $profile->movies()->updateOrInsert(
+                ['movie_id' => $movieId],
+                ['status' => 'favorite']
+            );
+        }
+        return back()->with('success', 'Filme adicionado aos favoritos!');
+    }
+
+    public function favorites($profileId)
+    {
+        $profile = Profile::findOrFail($profileId);
+        $favorites = $profile->favoriteMovies();
+
+        return view('movies.favorites', compact('favorites', 'profile'));
     }
 }
